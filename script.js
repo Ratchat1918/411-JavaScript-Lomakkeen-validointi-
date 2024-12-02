@@ -82,27 +82,28 @@ function checkLanguage(){
 }
 const sahkoposti=document.getElementById("sahkoposti");
 const Sahkovirhe=document.getElementById("Sahkovirhe");
-function checkEmail(i){
-    const at="@";
-    const com=".com";
-    const net= ".net";
-    if(sahkoposti.value.includes(at)===false || sahkoposti.value.includes(at,2)===false){
-        Sahkovirhe.textContent="Syötö voimassa oleva sähköposti";
-    }
-    if(sahkoposti.value.includes(com)===false){
-        Sahkovirhe.textContent="Syötö voimassa oleva sähköposti";
-    }
+function checkEmail(i) {
+    const email = sahkoposti.value;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (email === '' || email === null) {
+        i.preventDefault();
+        Sahkovirhe.textContent = "*Syötä sähköposti.";
+    } else if (!emailRegex.test(email)) {
+        i.preventDefault();
+        Sahkovirhe.textContent = "*Sähköpostiosoite ei ole kelvollinen.";
+    }
 }
+
 const postinumero=document.getElementById("postinumero");
 const Postivirhe=document.getElementById("Postivirhe");
 function checkPostNumber(i){
     kirjet=['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m']
     const postnumber=postinumero.value;
     for(let x=0; x<kirjet.length; x++){
-        if(postnumber.includes(kirjet[x])===true){
+        if(postnumber.includes(kirjet[x])===true || postnumber.length!=5){
             i.preventDefault()
-            Postivirhe.textContent="*Postinumerossa ei saa olla kirjettä";
+            Postivirhe.textContent="*Postinumerossa ei saa olla kirjettä ja Postinumerossa pitää olla 5 numeroa";
             break
         }
         if(postnumber==null || postnumber=='' ){
